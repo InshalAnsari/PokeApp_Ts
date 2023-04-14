@@ -1,4 +1,4 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {NavigationProp} from '@react-navigation/native';
 import React, {Component} from 'react';
 import {
   StyleSheet,
@@ -10,15 +10,16 @@ import {
 import {RootStackParamList} from '../../App';
 
 interface IProps {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'PokeInput'>;
+  navigation?: NavigationProp<RootStackParamList, 'PokeInput'>;
 }
 
 interface IState {
-  inputVal?: string;
+  inputVal: string;
   isEmpty: boolean;
 }
 
 class PokeInput extends Component<IProps, IState> {
+ 
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -27,14 +28,9 @@ class PokeInput extends Component<IProps, IState> {
     };
   }
   render() {
+    const {navigation} = this.props;
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 10,
-        }}>
+      <View style={styles.container}>
         <TextInput
           value={this.state.inputVal}
           onChangeText={val => this.setState({inputVal: val, isEmpty: false})}
@@ -49,7 +45,7 @@ class PokeInput extends Component<IProps, IState> {
           onPress={() => {
             this.state.inputVal === ''
               ? this.setState({isEmpty: true})
-              : this.props.navigation.navigate('PokeData', {
+              : navigation?.navigate('PokeData', {
                   val: this.state.inputVal,
                 });
           }}>
@@ -69,6 +65,12 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
     color: '#000',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   errTxt: {
     color: 'red',

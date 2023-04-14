@@ -6,7 +6,7 @@ import PokeInput from './src/screens/PokeInput';
 import PokeData from './src/screens/PokeData';
 
 export type RootStackParamList = {
-  PokeInput: undefined,
+  PokeInput:undefined,
   PokeData: {val:string},
 }
 const Stack = createNativeStackNavigator<RootStackParamList>();
