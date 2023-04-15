@@ -6,6 +6,8 @@ import {
   TextInput,
   View,
   TouchableWithoutFeedback,
+  TouchableOpacity,
+  Button,
 } from 'react-native';
 import {RootStackParamList} from '../../App';
 
@@ -33,6 +35,7 @@ class PokeInput extends Component<IProps, IState> {
       <View style={styles.container}>
         <TextInput
           value={this.state.inputVal}
+          testID="input"
           onChangeText={val => this.setState({inputVal: val, isEmpty: false})}
           placeholder="Enter Pokemon Name"
           placeholderTextColor={'#a9a9a9'}
@@ -41,7 +44,8 @@ class PokeInput extends Component<IProps, IState> {
         {this.state.isEmpty && (
           <Text style={styles.errTxt}>Please Enter Pokemon Name</Text>
         )}
-        <TouchableWithoutFeedback
+        <TouchableOpacity
+        testID='button'
           onPress={() => {
             this.state.inputVal === ''
               ? this.setState({isEmpty: true})
@@ -52,7 +56,7 @@ class PokeInput extends Component<IProps, IState> {
           <View style={styles.btn}>
             <Text style={styles.btnTxt}>Search</Text>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     );
   }

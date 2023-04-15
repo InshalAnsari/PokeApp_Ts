@@ -72,7 +72,7 @@ class PokeData extends Component<IProps, IState> {
         </View>
       );
     if (loading) {
-      <ActivityIndicator color={"blue"}/>;
+      <ActivityIndicator testID='isLoading' color={"blue"}/>;
     }
     return (
       <View style={{flex: 1}}>
