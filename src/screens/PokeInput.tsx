@@ -44,7 +44,7 @@ class PokeInput extends Component<IProps, IState> {
         {this.state.isEmpty && (
           <Text style={styles.errTxt}>Please Enter Pokemon Name</Text>
         )}
-        <TouchableOpacity
+        <TouchableWithoutFeedback
         testID='button'
           onPress={() => {
             this.state.inputVal === ''
@@ -56,7 +56,7 @@ class PokeInput extends Component<IProps, IState> {
           <View style={styles.btn}>
             <Text style={styles.btnTxt}>Search</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
       </View>
     );
   }
