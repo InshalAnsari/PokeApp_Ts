@@ -6,8 +6,6 @@ import {
   TextInput,
   View,
   TouchableWithoutFeedback,
-  TouchableOpacity,
-  Button,
 } from 'react-native';
 import {RootStackParamList} from '../../App';
 
@@ -45,7 +43,7 @@ class PokeInput extends Component<IProps, IState> {
           <Text style={styles.errTxt}>Please Enter Pokemon Name</Text>
         )}
         <TouchableWithoutFeedback
-        testID='button'
+          testID='button'
           onPress={() => {
             this.state.inputVal === ''
               ? this.setState({isEmpty: true})

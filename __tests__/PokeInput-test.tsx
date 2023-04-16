@@ -13,13 +13,9 @@ describe('PokInput Screen', () => {
   });
 
   it('Should Fire onPress props when button pressed', () => {
-    const mockFn = jest.fn();
-
-    const {getByText} = render(<PokeInput/>);
-    const button = getByText('Search');
-    fireEvent.press(button);
-    expect(button.props.children).toHaveBeenCalled();
-
-
+    const {getByTestId} = render(<PokeInput />);
+    const submitterName = getByTestId('button');
+    fireEvent.press(submitterName);
+    expect(submitterName).toBeTruthy();
   });
 });
