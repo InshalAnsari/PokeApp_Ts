@@ -9,12 +9,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {RootStackParamList} from '../../App';
+import {fetchPokemon} from '../api/fetchPokemon';
 
 export interface Response {
   base_experience?: string;
   name: string;
   weight?: number;
-  sprites: {
+  sprites?: {
     other: {
       home: {
         front_default: string;
@@ -44,9 +45,7 @@ class PokeData extends Component<IProps, IState> {
   fetchData = async () => {
     try {
       const searchVal = this.props.route.params.val.toLowerCase();
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${searchVal}`);
-      const data: Response = await res.json();
-      console.log(JSON.stringify(data, undefined, 4));
+      const data: Response = await fetchPokemon(searchVal);
       data &&
         this.setState({
           data: data,
@@ -65,31 +64,28 @@ class PokeData extends Component<IProps, IState> {
   }
   render() {
     const {loading, errorMsg, data} = this.state;
-    if (errorMsg)
-      return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{color: '#000'}}>{this.state.errorMsg}</Text>
-        </View>
-      );
-    if (loading) {
-      <ActivityIndicator testID='isLoading' color={"blue"}/>;
-    }
     return (
       <View style={{flex: 1}}>
+        {loading && <ActivityIndicator testID="isLoading" color={'blue'} />}
+        {errorMsg && (
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: '#000'}}>{this.state.errorMsg}</Text>
+          </View>
+        )}
         <ScrollView
           style={{flexGrow: 1, paddingHorizontal: 10}}
           contentContainerStyle={{alignItems: 'center'}}
           showsVerticalScrollIndicator={false}>
           <Image
-            source={{uri: data?.sprites.other.home.front_default}}
+            source={{uri: data?.sprites?.other.home.front_default}}
             style={{height: 200, width: '100%'}}
             resizeMode="contain"
           />
-          <Text style={styles.headerTxt}>
-           {`${data?.name?.charAt(0).toUpperCase()}${data?.name.slice(1)}`}
+          <Text testID='pokename' style={styles.headerTxt}>
+            {`${data?.name?.charAt(0).toUpperCase()}${data?.name.slice(1)}`}
           </Text>
-          <Text style={styles.data}>Weight : {data?.weight}</Text>
-          <Text style={styles.data}>Experience : {data?.base_experience}</Text>
+          <Text testID='pokeWeight' style={styles.data}>Weight : {data?.weight}</Text>
+          <Text testID='pokeExp' style={styles.data}>Experience : {data?.base_experience}</Text>
         </ScrollView>
       </View>
     );
